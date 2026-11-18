@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Profile</h2>
+<p>Username: {{ user.username }}</p>
+<p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Contact number: {{ user.contact_number|default:"Not set" }}</p>
+<p>Role: {{ user.get_role_display }}</p>
+<a href="{% url 'accounts:profile_edit' %}">Edit Profile</a>
+{% endblock %}
