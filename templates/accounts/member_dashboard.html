@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
+{% block main_class %}wide{% endblock %}
 {% block content %}
-<h2>Welcome, {{ user.first_name }}</h2>
-<p>Member Dashboard</p>
+<h2>Welcome, {{ user.first_name|default:user.username }}</h2>
+
+<div class="tabs">
+  <span class="tab active">🏠 Dashboard</span>
+  <span class="tab disabled">🔍 Search</span>
+  <span class="tab disabled">⭐ My Words</span>
+  <span class="tab disabled">📝 Quiz</span>
+  <span class="tab disabled">📊 Analytics</span>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h3>📖 Word of the Day</h3>
+    <p class="muted">Coming soon.</p>
+  </div>
+  <div class="card">
+    <h3>🔍 Search a Word</h3>
+    <p class="muted">Coming soon.</p>
+  </div>
+  <div class="card">
+    <h3>⭐ Recently Saved Words</h3>
+    <p class="muted">No saved words yet.</p>
+  </div>
+</div>
 {% endblock %}

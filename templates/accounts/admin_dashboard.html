@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
+{% block main_class %}wide{% endblock %}
 {% block content %}
 <h2>Welcome, {{ user.first_name|default:user.username }}</h2>
-<p>Admin Dashboard</p>
-<p>Total registered users: {{ total_users }}</p>
+
+<div class="tabs">
+  <span class="tab active">🏠 Admin Dashboard</span>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h3>👥 Total Registered Users</h3>
+    <p class="stat">{{ total_users }}</p>
+  </div>
+</div>
 {% endblock %}
