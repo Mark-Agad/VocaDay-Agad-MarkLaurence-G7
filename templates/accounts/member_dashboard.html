@@ -6,7 +6,8 @@
 <div class="tabs">
   <span class="tab active">🏠 Dashboard</span>
   <a class="tab" style="text-decoration:none" href="{% url 'vocabulary:search' %}">🔍 Search</a>
-<a class="tab" style="text-decoration:none" href="{% url 'vocabulary:my_words' %}">⭐ My Words</a>  <span class="tab disabled">📝 Quiz</span>
+  <a class="tab" style="text-decoration:none" href="{% url 'vocabulary:my_words' %}">⭐ My Words</a>
+  <span class="tab disabled">📝 Quiz</span>
   <span class="tab disabled">📊 Analytics</span>
 </div>
 
@@ -22,7 +23,16 @@
   </div>
   <div class="card">
     <h3>⭐ Recently Saved Words</h3>
-    <p class="muted">No saved words yet.</p>
+    {% if recent_saved %}
+      <ul style="padding-left: 18px; margin: 0 0 12px;">
+        {% for item in recent_saved %}
+          <li><strong>{{ item.word.word_text }}</strong></li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'vocabulary:my_words' %}">View all my words</a>
+    {% else %}
+      <p class="muted">No saved words yet.</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

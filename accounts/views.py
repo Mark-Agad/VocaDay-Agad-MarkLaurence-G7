@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm, ProfileForm
 from .decorators import role_required
 from .models import User
+from vocabulary.models import SavedWord
 
 
 def register_view(request):
@@ -28,13 +29,20 @@ def dashboard_redirect(request):
 
 @role_required(User.ADMIN)
 def admin_dashboard(request):
-    context = {'total_users': User.objects.count()}
+    context = {
+        'total_users': User.objects.count(),
+        'total_saved_words': SavedWord.objects.count(),
+        'latest_saved': SavedWord.objects.select_related('user', 'word')[:20],
+    }
     return render(request, 'accounts/admin_dashboard.html', context)
 
 
 @role_required(User.MEMBER)
 def member_dashboard(request):
-    return render(request, 'accounts/member_dashboard.html')
+    recent_saved = SavedWord.objects.filter(
+        user=request.user
+    ).select_related('word')[:5]
+    return render(request, 'accounts/member_dashboard.html', {'recent_saved': recent_saved})
 
 
 @login_required
