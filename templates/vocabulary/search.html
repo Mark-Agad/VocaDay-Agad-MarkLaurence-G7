@@ -24,6 +24,8 @@
   {% endif %}
   {% if result.audio %}
     <audio controls src="{{ result.audio }}"></audio>
+  {% else %}
+    <p class="muted">No audio available for this word.</p>
   {% endif %}
 
   {% for meaning in result.meanings %}

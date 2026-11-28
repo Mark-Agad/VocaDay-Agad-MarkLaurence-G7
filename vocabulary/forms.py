@@ -12,6 +12,8 @@ class SearchForm(forms.Form):
 
     def clean_word(self):
         word = self.cleaned_data['word'].strip().lower()
-        if not re.fullmatch(r"[a-z]+(?:[-' ][a-z]+)*", word):
-            raise forms.ValidationError('Enter a valid English word (letters only).')
+        if not re.fullmatch(r"[a-z]+(?:['-][a-z]+)*", word):
+            raise forms.ValidationError(
+                'Enter one English word (letters, hyphen or apostrophe only).'
+            )
         return word
