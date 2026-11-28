@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block main_class %}wide{% endblock %}
+{% block content %}
+<h2>My Words</h2>
+
+<div class="tabs">
+  <a class="tab" style="text-decoration:none" href="{% url 'accounts:member_dashboard' %}">🏠 Dashboard</a>
+  <a class="tab" style="text-decoration:none" href="{% url 'vocabulary:search' %}">🔍 Search</a>
+  <span class="tab active">⭐ My Words</span>
+  <span class="tab disabled">📝 Quiz</span>
+  <span class="tab disabled">📊 Analytics</span>
+</div>
+
+{% if saved_words %}
+  <p class="muted" style="margin-bottom: 16px;">
+    You have {{ saved_words|length }} saved word{{ saved_words|length|pluralize }}.
+  </p>
+  <div class="cards">
+    {% for item in saved_words %}
+    <div class="card">
+      <h3>{{ item.word.word_text }}</h3>
+      {% if item.word.phonetic %}
+        <p class="muted">{{ item.word.phonetic }}</p>
+      {% endif %}
+      {% if item.word.part_of_speech %}
+        <p class="muted"><em>{{ item.word.part_of_speech }}</em></p>
+      {% endif %}
+      <p style="margin: 8px 0;">{{ item.word.definition }}</p>
+      {% if item.word.example_sentence %}
+        <p class="muted" style="margin-bottom: 8px;"><em>&ldquo;{{ item.word.example_sentence }}&rdquo;</em></p>
+      {% endif %}
+      {% if item.word.audio_url %}
+        <audio controls src="{{ item.word.audio_url }}" style="width:100%; margin-bottom: 8px;"></audio>
+      {% else %}
+        <p class="muted" style="margin-bottom: 8px;">No audio available for this word.</p>
+      {% endif %}
+      <p class="muted" style="margin-bottom: 12px;">Saved on {{ item.date_saved|date:"M d, Y" }}</p>
+      <form method="post" action="{% url 'vocabulary:remove_word' item.pk %}"
+            onsubmit="return confirm('Remove this word from your saved words?');">
+        {% csrf_token %}
+        <button type="submit">Remove</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="muted">You have no saved words yet.</p>
+  <p style="margin-top: 12px;"><a class="btn" href="{% url 'vocabulary:search' %}">Search a word</a></p>
+{% endif %}
+{% endblock %}

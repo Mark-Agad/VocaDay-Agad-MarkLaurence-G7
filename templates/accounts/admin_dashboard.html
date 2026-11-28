@@ -12,5 +12,21 @@
     <h3>👥 Total Registered Users</h3>
     <p class="stat">{{ total_users }}</p>
   </div>
+  <div class="card">
+    <h3>📖 Words Stored</h3>
+    <p class="stat">{{ total_words }}</p>
+  </div>
+  <div class="card">
+    <h3>⭐ Total Saved Words</h3>
+    <p class="stat">{{ total_saved_words }}</p>
+  </div>
+  <div class="card">
+    <h3>🔍 Total Searches</h3>
+    <p class="stat">{{ total_searches }}</p>
+  </div>
 </div>
+
+<p class="muted" style="margin-top: 20px;">
+  Each member's saved words and searches are private and are not shown here.
+</p>
 {% endblock %}
