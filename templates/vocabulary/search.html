@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block main_class %}wide{% endblock %}
+{% block content %}
+<h2>Search a Word</h2>
+
+<div class="tabs">
+  <a class="tab" style="text-decoration:none" href="{% url 'accounts:member_dashboard' %}">🏠 Dashboard</a>
+  <span class="tab active">🔍 Search</span>
+  <span class="tab disabled">⭐ My Words</span>
+  <span class="tab disabled">📝 Quiz</span>
+  <span class="tab disabled">📊 Analytics</span>
+</div>
+
+<form method="get">
+  {{ form.as_p }}
+  <button type="submit">Search</button>
+</form>
+
+{% if result %}
+<div class="card" style="margin-top: 24px;">
+  <h3 style="font-size: 1.5rem;">{{ result.word }}</h3>
+  {% if result.phonetic %}
+    <p class="muted">{{ result.phonetic }}</p>
+  {% endif %}
+  {% if result.audio %}
+    <audio controls src="{{ result.audio }}"></audio>
+  {% endif %}
+
+  {% for meaning in result.meanings %}
+    <h4>{{ meaning.part_of_speech }}</h4>
+    <ol>
+      {% for d in meaning.definitions %}
+        <li>
+          {{ d.definition }}
+          {% if d.example %}
+            <br><em class="muted">&ldquo;{{ d.example }}&rdquo;</em>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
