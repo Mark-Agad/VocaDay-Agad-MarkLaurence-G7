@@ -5,7 +5,7 @@
 
 <div class="tabs">
   <span class="tab active">🏠 Dashboard</span>
-  <span class="tab disabled">🔍 Search</span>
+  <a class="tab" style="text-decoration:none" href="{% url 'vocabulary:search' %}">🔍 Search</a>
   <span class="tab disabled">⭐ My Words</span>
   <span class="tab disabled">📝 Quiz</span>
   <span class="tab disabled">📊 Analytics</span>
@@ -18,7 +18,8 @@
   </div>
   <div class="card">
     <h3>🔍 Search a Word</h3>
-    <p class="muted">Coming soon.</p>
+    <p class="muted" style="margin-bottom: 12px;">Look up the meaning of any English word.</p>
+    <a class="btn" href="{% url 'vocabulary:search' %}">Search a word</a>
   </div>
   <div class="card">
     <h3>⭐ Recently Saved Words</h3>
