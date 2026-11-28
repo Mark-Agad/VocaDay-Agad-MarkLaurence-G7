@@ -13,34 +13,20 @@
     <p class="stat">{{ total_users }}</p>
   </div>
   <div class="card">
+    <h3>📖 Words Stored</h3>
+    <p class="stat">{{ total_words }}</p>
+  </div>
+  <div class="card">
     <h3>⭐ Total Saved Words</h3>
     <p class="stat">{{ total_saved_words }}</p>
   </div>
+  <div class="card">
+    <h3>🔍 Total Searches</h3>
+    <p class="stat">{{ total_searches }}</p>
+  </div>
 </div>
 
-<h3 style="margin-top: 28px;">Latest Saved Words (all users)</h3>
-{% if latest_saved %}
-<div style="overflow-x: auto;">
-  <table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
-    <thead>
-      <tr style="text-align: left; border-bottom: 2px solid var(--border);">
-        <th style="padding: 8px;">User</th>
-        <th style="padding: 8px;">Word</th>
-        <th style="padding: 8px;">Date Saved</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in latest_saved %}
-      <tr style="border-bottom: 1px solid var(--border);">
-        <td style="padding: 8px;">{{ item.user.username }}</td>
-        <td style="padding: 8px;">{{ item.word.word_text }}</td>
-        <td style="padding: 8px;">{{ item.date_saved|date:"M d, Y H:i" }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-{% else %}
-  <p class="muted" style="margin-top: 12px;">No saved words yet.</p>
-{% endif %}
+<p class="muted" style="margin-top: 20px;">
+  Each member's saved words and searches are private and are not shown here.
+</p>
 {% endblock %}
