@@ -1,7 +1,7 @@
 from urllib.parse import quote
 
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
@@ -90,3 +90,19 @@ def save_word_view(request):
         messages.error(request, f'"{word_text}" is already in your saved words.')
 
     return redirect(f"{reverse('vocabulary:search')}?word={quote(word_text)}&saved=1")
+
+
+@role_required(User.MEMBER)
+def my_words_view(request):
+    saved_words = SavedWord.objects.filter(user=request.user).select_related('word')
+    return render(request, 'vocabulary/my_words.html', {'saved_words': saved_words})
+
+
+@role_required(User.MEMBER)
+@require_POST
+def remove_word_view(request, pk):
+    saved = get_object_or_404(SavedWord, pk=pk, user=request.user)
+    word_text = saved.word.word_text
+    saved.delete()
+    messages.success(request, f'"{word_text}" was removed from your saved words.')
+    return redirect('vocabulary:my_words')
