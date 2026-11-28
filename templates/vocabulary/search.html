@@ -28,6 +28,16 @@
     <p class="muted">No audio available for this word.</p>
   {% endif %}
 
+  {% if is_saved %}
+    <p class="muted" style="margin: 12px 0;">✓ This word is in your saved words.</p>
+  {% else %}
+    <form method="post" action="{% url 'vocabulary:save_word' %}" style="margin: 12px 0;">
+      {% csrf_token %}
+      <input type="hidden" name="word" value="{{ searched_word }}">
+      <button type="submit">⭐ Save Word</button>
+    </form>
+  {% endif %}
+
   {% for meaning in result.meanings %}
     <h4>{{ meaning.part_of_speech }}</h4>
     <ol>
